@@ -66,3 +66,21 @@ The structure for the application looks like this:
         +---Migrations      Contains the database migrations
         +---Models          Contains the application models
 ```
+
+### Calculating the embedding profile of a user
+
+For the purpose of the example, I've opted to re-calculate the embeddings for a user synchronously. This is not ideal
+in production as the process is quite slow as the amount of content grows over time. You'll want to offload the
+recalculation to a background process.
+
+Right now, the embedding profile takes all articles written by the user into account. This is usually not what you want.
+I've used decay functions to fade-out older articles in the past. You'll have to come up with your own mechanism to
+control how much value older content provides to the expert results.
+
+### Other use cases for this code
+
+You can use the same ideas that I used here to come up with recommended articles based on the semantic similarity between
+the current article and articles in the vector database.
+
+Another use case could be recommended articles in general. For general recommendations you'll have to build a user profile
+based on the user likes and then find similar articles in the vector database based on the embedding profile you built.
