@@ -1,0 +1,27 @@
+services:
+  database:
+    container_name: database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      MSSQL_SA_PASSWORD: ${SQL_PASSWORD}
+      ACCEPT_EULA: "Y"
+    volumes:
+      - ./volumes/mssql/data:/var/opt/mssql/data
+      - ./volumes/mssql/logs:/var/opt/mssql/logs
+      - ./volumes/mssql/secrets:/var/opt/mssql/secrets
+  vector_store:
+    container_name: vectorstore
+    image: semitechnologies/weaviate:1.21.2
+    ports:
+      - 8080:8080
+    volumes:
+      - ./volumes/weaviate:/var/lib/weaviate
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      ENABLE_MODULES: "text2vec-cohere,text2vec-huggingface,text2vec-palm,text2vec-openai,generative-openai,generative-cohere,generative-palm,ref2vec-centroid,reranker-cohere,qna-openai"
+      CLUSTER_HOSTNAME: "node1"
