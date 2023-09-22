@@ -1,5 +1,7 @@
 using ExpertFinder.Data;
 using ExpertFinder.GraphQL;
+using ExpertFinder.GraphQL.Articles;
+using ExpertFinder.GraphQL.Users;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +15,12 @@ builder.Services.AddGraphQLServer()
     .ModifyRequestOptions(options => options.IncludeExceptionDetails = builder.Environment.IsDevelopment())
     .RegisterDbContext<ApplicationDbContext>()
     .AddType<ArticleType>()
-    .AddTypeExtension<QueryType>()
-    .AddMutationType<Mutation>()
-    .AddQueryType<Query>();
+    .AddType<UserType>()
+    .AddQueryType()
+    .AddTypeExtension<ArticleQueries>()
+    .AddTypeExtension<UserQueries>()
+    .AddMutationType()
+    .AddTypeExtension<ArticleMutations>();
 
 var app = builder.Build();
 

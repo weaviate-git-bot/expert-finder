@@ -1,10 +1,10 @@
 ﻿using ExpertFinder.Data;
-using ExpertFinder.GraphQL.Models;
 using ExpertFinder.Models;
 
-namespace ExpertFinder.GraphQL;
+namespace ExpertFinder.GraphQL.Articles;
 
-public class Mutation
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public class ArticleMutations
 {
     public PublishArticlePayload PublishArticle(PublishArticleInput input, [Service] ApplicationDbContext dbContext)
     {
@@ -30,6 +30,7 @@ public class Mutation
         {
             ArticleId = article.Id,
         };
+        
     }
 
     public LikeArticlePayload LikeArticle(LikeArticleInput input, [Service] ApplicationDbContext dbContext)
@@ -51,7 +52,7 @@ public class Mutation
 
         return new LikeArticlePayload
         {
-            Likes = dbContext.Likes.Where(x => x.ArticleId == input.ArticleId).Count()
+            Likes = dbContext.Likes.Count(x => x.ArticleId == input.ArticleId)
         };
     }
 }

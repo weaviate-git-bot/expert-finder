@@ -1,9 +1,8 @@
 ﻿using ExpertFinder.Data;
-using ExpertFinder.GraphQL.Resolvers;
 using ExpertFinder.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpertFinder.GraphQL;
+namespace ExpertFinder.GraphQL.Articles;
 
 public class ArticleType : ObjectType<Article>
 {

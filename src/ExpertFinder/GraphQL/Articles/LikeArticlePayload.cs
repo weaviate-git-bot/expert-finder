@@ -1,4 +1,4 @@
-namespace ExpertFinder.GraphQL.Models;
+namespace ExpertFinder.GraphQL.Articles;
 
 public class LikeArticlePayload
 {
