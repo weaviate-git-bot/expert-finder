@@ -1,5 +1,5 @@
-﻿using ExpertFinder.Data;
-using ExpertFinder.Models;
+﻿using ExpertFinder.Domain.Aggregates.UserAggregate;
+using ExpertFinder.Infrastructure.Persistence;
 
 namespace ExpertFinder.GraphQL.Users;
 
@@ -7,12 +7,6 @@ public class UserType : ObjectType<User>
 {
     protected override void Configure(IObjectTypeDescriptor<User> descriptor)
     {
-        descriptor.Field("likes").Resolve(context =>
-        {
-            var user = context.Parent<User>();
-            var dbContext = context.Services.GetRequiredService<ApplicationDbContext>();
-
-            return dbContext.Likes.Count(x => x.Article.Author.Id == user.Id);
-        });
+        descriptor.Ignore(x => x.ExpertiseEmbedding);
     }
 }

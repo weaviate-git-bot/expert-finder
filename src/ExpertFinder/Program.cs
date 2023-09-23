@@ -1,15 +1,12 @@
-using ExpertFinder.Data;
-using ExpertFinder.GraphQL;
 using ExpertFinder.GraphQL.Articles;
 using ExpertFinder.GraphQL.Users;
+using ExpertFinder.Infrastructure;
+using ExpertFinder.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
-});
+builder.Services.AddInfrastructureLayer(builder.Configuration);
 
 builder.Services.AddGraphQLServer()
     .ModifyRequestOptions(options => options.IncludeExceptionDetails = builder.Environment.IsDevelopment())

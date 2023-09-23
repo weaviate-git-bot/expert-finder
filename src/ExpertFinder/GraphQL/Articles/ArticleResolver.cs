@@ -1,5 +1,5 @@
-﻿using ExpertFinder.Data;
-using ExpertFinder.Models;
+﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
+using ExpertFinder.Infrastructure.Persistence;
 
 namespace ExpertFinder.GraphQL.Articles;
 
