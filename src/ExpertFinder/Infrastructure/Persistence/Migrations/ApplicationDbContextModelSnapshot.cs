@@ -63,14 +63,9 @@ namespace ExpertFinder.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("ArticleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArticleId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("UserId", "ArticleId");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("ArticleId1");
 
                     b.ToTable("Likes");
                 });
@@ -143,14 +138,10 @@ namespace ExpertFinder.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("ExpertFinder.Domain.Aggregates.ArticleAggregate.Like", b =>
                 {
                     b.HasOne("ExpertFinder.Domain.Aggregates.ArticleAggregate.Article", null)
-                        .WithMany()
+                        .WithMany("Likes")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("ExpertFinder.Domain.Aggregates.ArticleAggregate.Article", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("ArticleId1");
 
                     b.HasOne("ExpertFinder.Domain.Aggregates.UserAggregate.User", null)
                         .WithMany()

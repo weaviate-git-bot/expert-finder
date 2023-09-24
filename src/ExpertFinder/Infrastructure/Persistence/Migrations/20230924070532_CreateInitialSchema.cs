@@ -54,8 +54,7 @@ namespace ExpertFinder.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArticleId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,11 +62,6 @@ namespace ExpertFinder.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Likes_Articles_ArticleId",
                         column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Likes_Articles_ArticleId1",
-                        column: x => x.ArticleId1,
                         principalTable: "Articles",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -98,11 +92,6 @@ namespace ExpertFinder.Infrastructure.Persistence.Migrations
                 name: "IX_Likes_ArticleId",
                 table: "Likes",
                 column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Likes_ArticleId1",
-                table: "Likes",
-                column: "ArticleId1");
         }
 
         /// <inheritdoc />
