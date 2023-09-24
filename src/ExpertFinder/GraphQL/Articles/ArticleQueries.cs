@@ -6,7 +6,7 @@ namespace ExpertFinder.GraphQL.Articles;
 public class ArticleQueries
 {
     [UsePaging]
-    public IQueryable<Article> GetArticles([Service] IArticleRepository articleRepository)
+    public IQueryable<Article> GetArticles(IArticleRepository articleRepository)
     {
         return articleRepository.GetArticles();
     }

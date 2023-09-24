@@ -7,8 +7,8 @@ namespace ExpertFinder.GraphQL.Users;
 public class UserQueries
 {
     [UsePaging]
-    public IQueryable<User> GetUsers([Service]ApplicationDbContext dbContext)
+    public IQueryable<User> GetUsers([Service] IUserRepository userRepository)
     {
-        return dbContext.Users.OrderBy(x => x.FullName);
+        return userRepository.GetUsers();
     }
 }

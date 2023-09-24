@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpertFinder.Infrastructure.Persistence;
 
-public class UserRepository: IUserRepository
+public class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _applicationDbContext;
 
@@ -16,5 +16,10 @@ public class UserRepository: IUserRepository
     {
         return await _applicationDbContext.Users.SingleAsync(
             x => x.Id == userId);
+    }
+
+    public IQueryable<User> GetUsers()
+    {
+        return _applicationDbContext.Users.OrderBy(x => x.FullName);
     }
 }
