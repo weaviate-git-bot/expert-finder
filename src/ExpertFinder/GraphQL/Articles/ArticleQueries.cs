@@ -1,5 +1,4 @@
 using ExpertFinder.Domain.Aggregates.ArticleAggregate;
-using ExpertFinder.Infrastructure.Persistence;
 
 namespace ExpertFinder.GraphQL.Articles;
 
@@ -7,8 +6,8 @@ namespace ExpertFinder.GraphQL.Articles;
 public class ArticleQueries
 {
     [UsePaging]
-    public IQueryable<Article> GetArticles([Service] ApplicationDbContext dbContext)
+    public IQueryable<Article> GetArticles([Service] IArticleRepository articleRepository)
     {
-        return dbContext.Articles.OrderBy(x => x.Title);
+        return articleRepository.GetArticles();
     }
 }

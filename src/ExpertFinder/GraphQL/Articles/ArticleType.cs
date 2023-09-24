@@ -1,6 +1,5 @@
 ﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpertFinder.GraphQL.Articles;
 

@@ -23,6 +23,11 @@ public class ArticleRepository : IArticleRepository
         return await _applicationDbContext.Articles.SingleOrDefaultAsync(x => x.Id == articleId);
     }
 
+    public IQueryable<Article> GetArticles()
+    {
+        return _applicationDbContext.Articles.OrderBy(x => x.Title);
+    }
+
     public async Task<IReadOnlyList<Article>> GetArticlesByAuthorId(Guid authorId)
     {
         return await _applicationDbContext.Articles.Where(x => x.AuthorId == authorId).ToListAsync();
