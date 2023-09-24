@@ -2,6 +2,7 @@
 using Azure.AI.OpenAI;
 using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Services;
+using ExpertFinder.Infrastructure.Persistence;
 using Microsoft.Extensions.Options;
 
 namespace ExpertFinder.Infrastructure.Services;

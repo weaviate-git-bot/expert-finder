@@ -1,9 +1,7 @@
 ﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
-using ExpertFinder.Domain.Services;
-using ExpertFinder.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpertFinder.Infrastructure.Services;
+namespace ExpertFinder.Infrastructure.Persistence;
 
 public class ArticleRepository: IArticleRepository
 {
