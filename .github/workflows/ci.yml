@@ -1,0 +1,27 @@
+name: CI Pipeline
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**/*"
+
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "docs/**/*"
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.401
+      - name: Restore .NET Packages
+        run: dotnet restore
+      - name: Build web app
+        run: dotnet publish src/ExpertFinder/ExpertFinder.csproj --no-restore -o dist/webapp -c Release
+      - name: Test web app
+        run: dotnet test test/ExpertFinder.Tests/ExpertFinder.Tests.csproj --no-restore
