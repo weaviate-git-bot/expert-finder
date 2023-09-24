@@ -3,13 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpertFinder.Infrastructure.Persistence;
 
-public class ArticleRepository: IArticleRepository
+public class ArticleRepository : IArticleRepository
 {
     private readonly ApplicationDbContext _applicationDbContext;
 
     public ArticleRepository(ApplicationDbContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
+    }
+
+    public async Task CreateAsync(Article article)
+    {
+        await _applicationDbContext.AddAsync(article);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
     public async Task<Article?> GetArticleByIdAsync(Guid articleId)
