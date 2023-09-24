@@ -7,17 +7,11 @@ services:
     environment:
       MSSQL_SA_PASSWORD: ${SQL_PASSWORD}
       ACCEPT_EULA: "Y"
-    volumes:
-      - ./volumes/mssql/data:/var/opt/mssql/data
-      - ./volumes/mssql/logs:/var/opt/mssql/logs
-      - ./volumes/mssql/secrets:/var/opt/mssql/secrets
   vector_store:
     container_name: vectorstore
     image: semitechnologies/weaviate:1.21.2
     ports:
       - 8080:8080
-    volumes:
-      - ./volumes/weaviate:/var/lib/weaviate
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
