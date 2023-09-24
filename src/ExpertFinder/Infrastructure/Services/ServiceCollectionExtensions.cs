@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.AI.OpenAI;
+using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Services;
 using Microsoft.Extensions.Options;
 

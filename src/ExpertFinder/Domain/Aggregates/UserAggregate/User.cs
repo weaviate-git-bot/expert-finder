@@ -1,3 +1,4 @@
+using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Services;
 using System.Numerics;
 

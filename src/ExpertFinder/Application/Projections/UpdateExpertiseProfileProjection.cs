@@ -1,4 +1,5 @@
-﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate.Events;
+﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
+using ExpertFinder.Domain.Aggregates.ArticleAggregate.Events;
 using ExpertFinder.Domain.Services;
 using ExpertFinder.Infrastructure.Persistence;
 using ExpertFinder.Shared;

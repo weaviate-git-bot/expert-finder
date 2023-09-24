@@ -1,6 +1,4 @@
-﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
-
-namespace ExpertFinder.Domain.Services;
+﻿namespace ExpertFinder.Domain.Aggregates.ArticleAggregate;
 
 public interface IArticleRepository
 {
