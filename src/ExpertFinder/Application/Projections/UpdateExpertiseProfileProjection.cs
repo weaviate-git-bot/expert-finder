@@ -11,19 +11,26 @@ namespace ExpertFinder.Application.Projections;
 /// <summary>
 /// This projection updates the expertise profile of the author after an article is published.
 /// </summary>
-public class UpdateExpertiseProfileProjection: IDomainEventHandler<ArticlePublishedEvent>
+public class UpdateExpertiseProfileProjection : IDomainEventHandler<ArticlePublishedEvent>
 {
     private readonly IArticleRepository _articleRepository;
     private readonly ISearchEngine _searchEngine;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private readonly IEmbeddingCalculator _embeddingCalculator;
 
-    public UpdateExpertiseProfileProjection(IUserRepository userRepository, IArticleRepository articleRepository, ISearchEngine searchEngine, IUnitOfWork unitOfWork)
+    public UpdateExpertiseProfileProjection(
+            IUserRepository userRepository,
+            IArticleRepository articleRepository,
+            ISearchEngine searchEngine,
+            IUnitOfWork unitOfWork,
+            IEmbeddingCalculator embeddingCalculator)
     {
         _userRepository = userRepository;
         _articleRepository = articleRepository;
         _searchEngine = searchEngine;
         _unitOfWork = unitOfWork;
+        _embeddingCalculator = embeddingCalculator;
     }
 
     public async Task Handle(ArticlePublishedEvent notification, CancellationToken cancellationToken)
@@ -34,8 +41,8 @@ public class UpdateExpertiseProfileProjection: IDomainEventHandler<ArticlePublis
         {
             return;
         }
-        
-        await user.UpdateExpertise(_articleRepository);
+
+        await user.UpdateExpertise(_articleRepository, _embeddingCalculator);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         await _searchEngine.IndexExpertProfileAsync(user);

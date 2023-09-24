@@ -1,47 +1,49 @@
 using ExpertFinder.Domain.Aggregates.ArticleAggregate;
+using ExpertFinder.Domain.Aggregates.UserAggregate.Events;
 using ExpertFinder.Domain.Services;
+using ExpertFinder.Shared;
 using System.Numerics;
 
 namespace ExpertFinder.Domain.Aggregates.UserAggregate;
 
-public class User
+public class User : AggregateRoot
 {
     private User()
     {
-        
+
     }
 
     public User(Guid userId)
     {
         Id = userId;
     }
-    
+
     public Guid Id { get; set; }
     public string FullName { get; set; } = "";
     public float[] ExpertiseEmbedding { get; set; } = new float[1536];
 
-    public async Task UpdateExpertise(IArticleRepository articleRepository)
+    public async Task UpdateExpertise(IArticleRepository articleRepository, IEmbeddingCalculator embeddingCalculator)
     {
         var articles = await articleRepository.GetArticlesByAuthorId(this.Id);
-        
-        Vector<float> expertiseEmbedding = new Vector<float>(new float[1536]);
+        var embedding = embeddingCalculator.CombineEmbeddings(articles.Select(x => x.Embedding).ToList());
 
-        // Calculate the new expertise embedding based on the articles that the user wrote.
-        // We're multiplying the vectors here so that we get a shared vector representing all the articles
-        // that the user wrote.
-        for (var index = 0; index < articles.Count; index++)
+        EmitDomainEvent(new ExpertiseUpdatedEvent(this.Id, embedding));
+    }
+
+    protected override bool TryApplyDomainEvent(IDomainEvent evt)
+    {
+        switch (evt)
         {
-            if (index == 0)
-            {
-                expertiseEmbedding = new Vector<float>(articles[index].Embedding.ToArray());
-            }
-            else
-            {
-                var embeddingVector = new Vector<float>(articles[index].Embedding.ToArray());
-                expertiseEmbedding = Vector.Multiply(expertiseEmbedding, embeddingVector);
-            }
+            case ExpertiseUpdatedEvent expertiseUpdated:
+                Apply(expertiseUpdated);
+                break;
         }
-        
-        expertiseEmbedding.CopyTo(ExpertiseEmbedding);
+
+        return true;
+    }
+
+    private void Apply(ExpertiseUpdatedEvent expertiseUpdated)
+    {
+        ExpertiseEmbedding = expertiseUpdated.ExpertiseEmbedding;
     }
 }

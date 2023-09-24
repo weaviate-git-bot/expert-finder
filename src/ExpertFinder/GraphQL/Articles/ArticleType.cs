@@ -27,5 +27,6 @@ public class ArticleType : ObjectType<Article>
 
         descriptor.Ignore(x => x.Embedding);
         descriptor.Ignore(x => x.AuthorId);
+        descriptor.Ignore(x => x.PendingDomainEvents);
     }
 }
