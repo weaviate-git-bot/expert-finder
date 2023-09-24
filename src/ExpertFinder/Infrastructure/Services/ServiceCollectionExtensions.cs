@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddScoped<IEmbeddingGenerator, EmbeddingGenerator>();
-        
+
         services.Configure<EmbeddingGeneratorOptions>(configuration.GetSection("EmbeddingGenerator"));
     }
 
@@ -31,5 +31,10 @@ public static class ServiceCollectionExtensions
     public static void AddUnitOfWork(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+    }
+
+    public static void AddSearchEngine(this IServiceCollection services)
+    {
+        services.AddScoped<ISearchEngine, SearchEngine>();
     }
 }

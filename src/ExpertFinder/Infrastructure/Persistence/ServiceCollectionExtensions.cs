@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
+using ExpertFinder.Domain.Aggregates.UserAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpertFinder.Infrastructure.Persistence;
 
@@ -10,5 +12,9 @@ public static class ServiceCollectionExtensions
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultDatabase"));
         });
+
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IArticleRepository, ArticleRepository>();
     }
 }

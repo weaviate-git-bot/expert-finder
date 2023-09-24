@@ -13,5 +13,6 @@ public static class ServiceCollectionExtensions
         services.AddEmbeddingGenerator(configuration);
         services.AddContentManager();
         services.AddUnitOfWork();
+        services.AddSearchEngine();
     }
 }
