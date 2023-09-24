@@ -1,5 +1,4 @@
 ﻿using ExpertFinder.Domain.Aggregates.UserAggregate;
-using ExpertFinder.Infrastructure.Persistence;
 
 namespace ExpertFinder.GraphQL.Users;
 

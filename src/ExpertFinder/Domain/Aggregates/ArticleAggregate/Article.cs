@@ -14,7 +14,7 @@ public class Article : AggregateRoot
     public Article(Guid articleId)
     {
         Id = articleId;
-    }    
+    }
 
     public Guid Id { get; set; }
 
@@ -24,22 +24,22 @@ public class Article : AggregateRoot
 
     public Guid AuthorId { get; set; }
 
-    public float[] Embedding { get; set; }
+    public float[] Embedding { get; set; } = new float[1536];
 
     public List<Like> Likes { get; set; } = new();
 
     public void Like(LikeArticleCommand cmd)
     {
-        EmitDomainEvent(new ArticleLikedEvent(cmd.ArticleId,cmd.UserId));
+        EmitDomainEvent(new ArticleLikedEvent(cmd.ArticleId, cmd.UserId));
     }
 
     public static async Task<Article> Publish(PublishArticleCommand cmd, IEmbeddingGenerator embeddingGenerator)
     {
-        var article = new Article( cmd.ArticleId);
+        var article = new Article(cmd.ArticleId);
         var articleEmbedding = await embeddingGenerator.GenerateEmbeddingAsync(cmd.Body);
-        
+
         article.EmitDomainEvent(new ArticlePublishedEvent(
-            cmd.ArticleId,cmd.Title,cmd.Body,cmd.AuthorId, articleEmbedding));
+            cmd.ArticleId, cmd.Title, cmd.Body, cmd.AuthorId, articleEmbedding));
 
         return article;
     }
