@@ -12,5 +12,6 @@ public static class ServiceCollectionExtensions
         services.AddPersistence(configuration);
         services.AddEmbeddingGenerator(configuration);
         services.AddContentManager();
+        services.AddUnitOfWork();
     }
 }

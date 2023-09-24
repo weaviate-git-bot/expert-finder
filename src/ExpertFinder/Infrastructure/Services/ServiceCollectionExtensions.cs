@@ -3,6 +3,7 @@ using Azure.AI.OpenAI;
 using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Services;
 using ExpertFinder.Infrastructure.Persistence;
+using ExpertFinder.Shared;
 using Microsoft.Extensions.Options;
 
 namespace ExpertFinder.Infrastructure.Services;
@@ -25,5 +26,10 @@ public static class ServiceCollectionExtensions
     public static void AddContentManager(this IServiceCollection services)
     {
         services.AddScoped<IArticleRepository, ArticleRepository>();
+    }
+
+    public static void AddUnitOfWork(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

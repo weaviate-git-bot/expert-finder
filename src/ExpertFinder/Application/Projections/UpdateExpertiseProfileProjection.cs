@@ -1,5 +1,6 @@
 ﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Aggregates.ArticleAggregate.Events;
+using ExpertFinder.Domain.Aggregates.UserAggregate;
 using ExpertFinder.Domain.Services;
 using ExpertFinder.Infrastructure.Persistence;
 using ExpertFinder.Shared;
@@ -12,24 +13,30 @@ namespace ExpertFinder.Application.Projections;
 /// </summary>
 public class UpdateExpertiseProfileProjection: IDomainEventHandler<ArticlePublishedEvent>
 {
-    private readonly ApplicationDbContext _applicationDbContext;
     private readonly IArticleRepository _articleRepository;
     private readonly ISearchEngine _searchEngine;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
 
-    public UpdateExpertiseProfileProjection(ApplicationDbContext applicationDbContext, IArticleRepository articleRepository, ISearchEngine searchEngine)
+    public UpdateExpertiseProfileProjection(IUserRepository userRepository, IArticleRepository articleRepository, ISearchEngine searchEngine, IUnitOfWork unitOfWork)
     {
-        _applicationDbContext = applicationDbContext;
+        _userRepository = userRepository;
         _articleRepository = articleRepository;
         _searchEngine = searchEngine;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(ArticlePublishedEvent notification, CancellationToken cancellationToken)
     {
-        var user = await _applicationDbContext.Users.SingleAsync(
-            x => x.Id == notification.AuthorId, 
-            cancellationToken: cancellationToken);
+        var user = await _userRepository.GetUserByIdAsync(notification.AuthorId);
+
+        if (user == null)
+        {
+            return;
+        }
         
         await user.UpdateExpertise(_articleRepository);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         await _searchEngine.IndexExpertProfileAsync(user);
     }
