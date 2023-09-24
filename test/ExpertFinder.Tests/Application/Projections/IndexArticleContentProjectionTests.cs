@@ -16,7 +16,7 @@ public class IndexArticleContentProjectionTests
         var articleId = Guid.NewGuid();
         var authorId = Guid.NewGuid();
         
-        var contentManager = A.Fake<IContentManager>();
+        var contentManager = A.Fake<IArticleRepository>();
         var searchEngine = A.Fake<ISearchEngine>();
 
         var publishArticleCommand = new PublishArticleCommand(articleId, "Test content", "Test content", authorId);
@@ -45,7 +45,7 @@ public class IndexArticleContentProjectionTests
         var articleId = Guid.NewGuid();
         var authorId = Guid.NewGuid();
         
-        var contentManager = A.Fake<IContentManager>();
+        var contentManager = A.Fake<IArticleRepository>();
         var searchEngine = A.Fake<ISearchEngine>();
         
         A.CallTo(() => contentManager.GetArticleByIdAsync(articleId)).Returns(null as Article);

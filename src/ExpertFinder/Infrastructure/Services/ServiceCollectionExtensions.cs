@@ -22,6 +22,6 @@ public static class ServiceCollectionExtensions
 
     public static void AddContentManager(this IServiceCollection services)
     {
-        services.AddScoped<IContentManager, ContentManager>();
+        services.AddScoped<IArticleRepository, ArticleRepository>();
     }
 }

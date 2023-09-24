@@ -12,13 +12,13 @@ namespace ExpertFinder.Application.Projections;
 public class UpdateExpertiseProfileProjection: IDomainEventHandler<ArticlePublishedEvent>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IContentManager _contentManager;
+    private readonly IArticleRepository _articleRepository;
     private readonly ISearchEngine _searchEngine;
 
-    public UpdateExpertiseProfileProjection(ApplicationDbContext applicationDbContext, IContentManager contentManager, ISearchEngine searchEngine)
+    public UpdateExpertiseProfileProjection(ApplicationDbContext applicationDbContext, IArticleRepository articleRepository, ISearchEngine searchEngine)
     {
         _applicationDbContext = applicationDbContext;
-        _contentManager = contentManager;
+        _articleRepository = articleRepository;
         _searchEngine = searchEngine;
     }
 
@@ -28,7 +28,7 @@ public class UpdateExpertiseProfileProjection: IDomainEventHandler<ArticlePublis
             x => x.Id == notification.AuthorId, 
             cancellationToken: cancellationToken);
         
-        await user.UpdateExpertise(_contentManager);
+        await user.UpdateExpertise(_articleRepository);
 
         await _searchEngine.IndexExpertProfileAsync(user);
     }

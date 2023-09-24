@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpertFinder.Infrastructure.Services;
 
-public class ContentManager: IContentManager
+public class ArticleRepository: IArticleRepository
 {
     private readonly ApplicationDbContext _applicationDbContext;
 
-    public ContentManager(ApplicationDbContext applicationDbContext)
+    public ArticleRepository(ApplicationDbContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
     }

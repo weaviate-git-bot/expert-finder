@@ -14,7 +14,7 @@ public class UserTests
     {
         // Arrange
         var user = new User(Guid.NewGuid());
-        var contentManager = A.Fake<IContentManager>();
+        var contentManager = A.Fake<IArticleRepository>();
 
         A.CallTo(() => contentManager.GetArticlesByAuthorId(A<Guid>.Ignored)).Returns(new List<Article>());
 
@@ -30,7 +30,7 @@ public class UserTests
     {
         // Arrange
         var user = new User(Guid.NewGuid());
-        var contentManager = A.Fake<IContentManager>();
+        var contentManager = A.Fake<IArticleRepository>();
 
         var articles = new List<Article>
         {
@@ -56,7 +56,7 @@ public class UserTests
     {
         // Arrange
         var user = new User(Guid.NewGuid());
-        var contentManager = A.Fake<IContentManager>();
+        var contentManager = A.Fake<IArticleRepository>();
 
         var articles = new List<Article>
         {

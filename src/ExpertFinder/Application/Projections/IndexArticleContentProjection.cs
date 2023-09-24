@@ -10,18 +10,18 @@ namespace ExpertFinder.Application.Projections;
 /// </summary>
 public class IndexArticleContentProjection: IDomainEventHandler<ArticlePublishedEvent>
 {
-    private readonly IContentManager _contentManager;
+    private readonly IArticleRepository _articleRepository;
     private readonly ISearchEngine _searchEngine;
 
-    public IndexArticleContentProjection(ISearchEngine searchEngine, IContentManager contentManager)
+    public IndexArticleContentProjection(ISearchEngine searchEngine, IArticleRepository articleRepository)
     {
         _searchEngine = searchEngine;
-        _contentManager = contentManager;
+        _articleRepository = articleRepository;
     }
 
     public async Task Handle(ArticlePublishedEvent notification, CancellationToken cancellationToken)
     {
-        var article = await _contentManager.GetArticleByIdAsync(notification.ArticleId);
+        var article = await _articleRepository.GetArticleByIdAsync(notification.ArticleId);
 
         if (article == null)
         {

@@ -2,7 +2,7 @@
 
 namespace ExpertFinder.Domain.Services;
 
-public interface IContentManager
+public interface IArticleRepository
 {
     Task<Article?> GetArticleByIdAsync(Guid articleId);
     Task<IReadOnlyList<Article>> GetArticlesByAuthorId(Guid authorId);

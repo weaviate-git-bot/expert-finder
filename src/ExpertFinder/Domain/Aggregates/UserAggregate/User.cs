@@ -19,9 +19,9 @@ public class User
     public string FullName { get; set; } = "";
     public float[] ExpertiseEmbedding { get; set; } = new float[1536];
 
-    public async Task UpdateExpertise(IContentManager contentManager)
+    public async Task UpdateExpertise(IArticleRepository articleRepository)
     {
-        var articles = await contentManager.GetArticlesByAuthorId(this.Id);
+        var articles = await articleRepository.GetArticlesByAuthorId(this.Id);
         
         Vector<float> expertiseEmbedding = new Vector<float>(new float[1536]);
 
