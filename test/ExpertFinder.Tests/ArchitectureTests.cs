@@ -9,7 +9,7 @@ namespace ExpertFinder.Tests;
 public class ArchitectureTests
 {
     private static Architecture ApplicationArchitecture = new ArchLoader()
-        .LoadAssemblies(typeof(ApplicationAssemblyMarker).Assembly)
+        .LoadAssemblies(typeof(AssemblyReference).Assembly)
         .Build();
 
     private static IObjectProvider<Class> DomainLayer = Classes().That().ResideInNamespace("ExpertFinder.Domain");

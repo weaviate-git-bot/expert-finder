@@ -24,6 +24,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExpertFinder.Weaviate\ExpertFinder.Weaviate.csproj" />
+  </ItemGroup>
+
 
 
 

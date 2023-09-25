@@ -4,6 +4,7 @@ using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Services;
 using ExpertFinder.Infrastructure.Persistence;
 using ExpertFinder.Shared;
+using ExpertFinder.Weaviate;
 using Microsoft.Extensions.Options;
 
 namespace ExpertFinder.Infrastructure.Services;
@@ -33,8 +34,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
-    public static void AddSearchEngine(this IServiceCollection services)
+    public static void AddSearchEngine(this IServiceCollection services, Uri endpointUri)
     {
+        services.AddWeaviateClient(endpointUri);
         services.AddScoped<ISearchEngine, SearchEngine>();
     }
 }
