@@ -35,8 +35,9 @@ public class VectorDatabaseClient : IVectorDatabaseClient
 
         try
         {
-            await _httpClient.PostAsJsonAsync($"/v1/objects/{data.Class}", data);
+            await _httpClient.PostAsJsonAsync($"/v1/objects", data);
         }
+
         catch (HttpRequestException ex)
         {
             _logger.LogError(ex, "Failed to create object {objectId} of class {className}", data.Id, data.Class);

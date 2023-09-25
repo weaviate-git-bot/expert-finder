@@ -13,6 +13,6 @@ public static class ServiceCollectionExtensions
         services.AddEmbeddingGenerator(configuration);
         services.AddContentManager();
         services.AddUnitOfWork();
-        services.AddSearchEngine(new Uri(configuration["Weaviate:Endpoint"]!));
+        services.AddSearchEngine(new Uri(configuration["SearchEngine:Endpoint"]!));
     }
 }
