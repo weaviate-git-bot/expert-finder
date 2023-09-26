@@ -1,4 +1,5 @@
 ﻿using ExpertFinder.Domain.Aggregates.ArticleAggregate;
+using ExpertFinder.Domain.Services;
 using ExpertFinder.Infrastructure.Persistence;
 
 namespace ExpertFinder.GraphQL.Articles;
@@ -23,6 +24,14 @@ public class ArticleType : ObjectType<Article>
             var articleId = context.Parent<Article>().Id;
             var dbContext = context.Services.GetRequiredService<ApplicationDbContext>();
             return dbContext.Likes.Count(x => x.ArticleId == articleId);
+        });
+
+        descriptor.Field("experts").Resolve(context =>
+        {
+            var searchEngine = context.Services.GetRequiredService<ISearchEngine>();
+            var article = context.Parent<Article>();
+
+            return searchEngine.FindExpertAsync(article);
         });
 
         descriptor.Ignore(x => x.Embedding);

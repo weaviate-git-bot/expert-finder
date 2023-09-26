@@ -8,10 +8,18 @@ namespace ExpertFinder.Infrastructure.Services;
 public class SearchEngine : ISearchEngine
 {
     private IVectorDatabaseClient _client;
+    private readonly WeaviateSearch _searchClient;
 
-    public SearchEngine(IVectorDatabaseClient client)
+    public SearchEngine(IVectorDatabaseClient client, WeaviateSearch searchClient)
     {
         _client = client;
+        _searchClient = searchClient;
+    }
+
+    public async Task<IEnumerable<ExpertSearchResult>> FindExpertAsync(Article article)
+    {
+        var result = await _searchClient.GetExperts.ExecuteAsync(article.Embedding.Select(x => (double)x).ToList(), 0.3f);
+        return result.Data!.Get!.Expert!.Select(x => new ExpertSearchResult(Guid.Parse(x!._additional!.Id!), x!.FullName!)).ToList();
     }
 
     public async Task IndexArticleAsync(Article article)

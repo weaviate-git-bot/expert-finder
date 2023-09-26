@@ -7,4 +7,6 @@ public interface ISearchEngine
 {
     Task IndexArticleAsync(Article article);
     Task IndexExpertProfileAsync(User user);
+
+    Task<IEnumerable<ExpertSearchResult>> FindExpertAsync(Article article);
 }

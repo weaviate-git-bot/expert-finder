@@ -38,5 +38,9 @@ public static class ServiceCollectionExtensions
     {
         services.AddWeaviateClient(endpointUri);
         services.AddScoped<ISearchEngine, SearchEngine>();
+        services.AddWeaviateSearch().ConfigureHttpClient(client =>
+        {
+            client.BaseAddress = new($"{endpointUri}/v1/graphql");
+        });
     }
 }

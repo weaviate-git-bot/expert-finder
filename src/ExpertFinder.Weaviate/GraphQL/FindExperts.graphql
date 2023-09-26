@@ -1,0 +1,16 @@
+query GetExperts($vector: [Float!]!, $threshold: Float!) {
+  Get {
+    Expert (
+      limit: 3,
+      nearVector: {
+        vector: $vector,
+        distance: $threshold
+      }
+    ) {
+      fullName,
+      _additional {
+        id
+      }
+    }
+  }
+}
