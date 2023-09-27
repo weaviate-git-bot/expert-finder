@@ -2,6 +2,7 @@ using ExpertFinder.Domain.Aggregates.ArticleAggregate;
 using ExpertFinder.Domain.Aggregates.UserAggregate;
 using ExpertFinder.Domain.Services;
 using ExpertFinder.Weaviate;
+using ExpertFinder.Weaviate.GraphQL;
 
 namespace ExpertFinder.Infrastructure.Services;
 
